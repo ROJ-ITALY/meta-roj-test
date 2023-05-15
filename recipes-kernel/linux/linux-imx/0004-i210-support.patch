@@ -1,0 +1,45 @@
+From e7db81281e9150a2fa8d961413e148392a60ba09 Mon Sep 17 00:00:00 2001
+From: Paola Martiner Giore <paola.martiner@roj.com>
+Date: Wed, 15 Feb 2023 13:34:59 +0100
+Subject: [PATCH] i210 support
+
+
+diff --git a/drivers/net/ethernet/intel/igb/e1000_82575.c b/drivers/net/ethernet/intel/igb/e1000_82575.c
+index 50863fd87..05d8fd7e2 100644
+--- a/drivers/net/ethernet/intel/igb/e1000_82575.c
++++ b/drivers/net/ethernet/intel/igb/e1000_82575.c
+@@ -593,6 +593,7 @@ static s32 igb_get_invariants_82575(struct e1000_hw *hw)
+ 	case E1000_DEV_ID_I350_SGMII:
+ 		mac->type = e1000_i350;
+ 		break;
++	case E1000_DEV_ID_I210_COPPER_NC:
+ 	case E1000_DEV_ID_I210_COPPER:
+ 	case E1000_DEV_ID_I210_FIBER:
+ 	case E1000_DEV_ID_I210_SERDES:
+diff --git a/drivers/net/ethernet/intel/igb/e1000_hw.h b/drivers/net/ethernet/intel/igb/e1000_hw.h
+index 5d87957b2..86f16f3c3 100644
+--- a/drivers/net/ethernet/intel/igb/e1000_hw.h
++++ b/drivers/net/ethernet/intel/igb/e1000_hw.h
+@@ -40,6 +40,7 @@ struct e1000_hw;
+ #define E1000_DEV_ID_I350_SERDES		0x1523
+ #define E1000_DEV_ID_I350_SGMII			0x1524
+ #define E1000_DEV_ID_I210_COPPER		0x1533
++#define E1000_DEV_ID_I210_COPPER_NC     	0x1531
+ #define E1000_DEV_ID_I210_FIBER			0x1536
+ #define E1000_DEV_ID_I210_SERDES		0x1537
+ #define E1000_DEV_ID_I210_SGMII			0x1538
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index 368f0aac5..a881fb7e6 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -66,6 +66,7 @@ static const struct pci_device_id igb_pci_tbl[] = {
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_I354_BACKPLANE_2_5GBPS) },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_I211_COPPER), board_82575 },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_I210_COPPER), board_82575 },
++	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_I210_COPPER_NC), board_82575 },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_I210_FIBER), board_82575 },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_I210_SERDES), board_82575 },
+ 	{ PCI_VDEVICE(INTEL, E1000_DEV_ID_I210_SGMII), board_82575 },
+-- 
+2.34.1
+
